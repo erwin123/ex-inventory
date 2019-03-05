@@ -1,0 +1,108 @@
+<div class="back-container">
+  <h3>Inventory Back</h3>
+  <form clrForm class="back-form">
+    <div class="card">
+      <div class="card-header">
+        Back Documentation
+      </div>
+      <div class="alert alert-info" role="alert">
+        <div class="alert-items">
+          <div class="alert-item static">
+            <div class="alert-icon-wrapper">
+              <clr-icon class="alert-icon" shape="exclamation-triangle"></clr-icon>
+            </div>
+            <span class="alert-text">Pengembalian tidak bisa parsial, mohon dibuatkan data pinjaman order baru jika ingin perpanjang sebagian item yang diinginkan</span>
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-warning" role="alert" *ngIf="alert">
+        <div class="alert-items">
+          <div class="alert-item static">
+            <div class="alert-icon-wrapper">
+              <clr-icon class="alert-icon" shape="exclamation-triangle"></clr-icon>
+            </div>
+            <span class="alert-text">{{alertMessage}}</span>
+          </div>
+        </div>
+        <button type="button" class="close" aria-label="Close" (click)="alert=false">
+          <clr-icon aria-hidden="true" shape="close"></clr-icon>
+        </button>
+      </div>
+      <div class="card-block">
+        <zxing-scanner [formats]="['QR_CODE', 'EAN_13', 'CODE_128', 'DATA_MATRIX']" #scanner class="test-class" start="true"
+          (scanSuccess)="handleQrCodeResult($event)"></zxing-scanner>
+        <clr-input-container>
+          <label>
+            <clr-icon shape="search" size="18"></clr-icon> &nbsp;Search Asset No.(Butuh salah 1 asset no saja)
+          </label>
+          <input clrInput type="text" [(ngModel)]="searchItem" (input)="eventHandlerSearch($event)" name="ItemNo" />
+        </clr-input-container>
+        <div *ngIf="searchListAssets.length>0" class="search-result">
+          <div style="width: 100%;text-align: right;">
+            <button type="button" (click)="closeSearch()" class="btn btn-icon btn-danger" style="margin: 0px !important;">
+              <clr-icon shape="close"></clr-icon>
+            </button>
+          </div>
+          <div *ngFor="let b of searchListAssets" class="search-result-each" (click)="selectSearch(b)">
+            <span style="width: 100px;">{{b.ItemNo}}</span>&nbsp;<span style="width: 200px;">{{b.Brand}}</span>
+            <span style="background: #00576d;color: #fff;border: 1px #fff solid;padding: 5px;border-radius: 3px;">Add</span>
+          </div>
+        </div>
+        <br />
+        <label for="date" style="padding-left: 0 !important;padding-bottom: 0 !important;font-weight: bold;font-size: 13px;">
+          Items Order
+        </label>
+        <ng-select [disabled]="true" [items]="listAssets" bindLabel="ItemNo" [multiple]="true" bindValue="ItemNo"
+          [clearable]="true" placeholder="Item" [(ngModel)]="toBeBack" [ngModelOptions]="{standalone: true}" style="width: 260px;display: inline-block;">
+          <ng-template ng-option-tmp let-item="item" let-index="index">
+            <b>{{item.ItemNo}}</b> - <b>{{item.Brand}}</b>
+          </ng-template>
+        </ng-select>
+        <clr-input-container>
+          <label>
+            Order Out Date
+          </label>
+          <input clrInput type="text"[(ngModel)]="orderOutDate" name="OrderOutDate" disabled/>
+        </clr-input-container>
+        <br />
+        <label for="date" style="padding-left: 0 !important;padding-bottom: 0 !important;font-weight: bold;font-size: 13px;">
+          Back Date
+        </label>
+        <my-date-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="back.BackDate" placeholder="" [options]="myDatePickerOptions"
+          (dateChanged)="onDateChanged($event)"></my-date-picker>
+          
+        <clr-input-container>
+          <label>Order Number</label>
+          <input clrInput type="text" [(ngModel)]="back.OutNo" name="Project" disabled />
+        </clr-input-container>
+        <clr-input-container>
+          <label>Project</label>
+          <input clrInput type="text" [(ngModel)]="orderProject" name="Project2" disabled/>
+        </clr-input-container>
+        <clr-input-container>
+          <label>PIC (Penanggung Jawab Barang)</label>
+          <input clrInput type="text" [(ngModel)]="back.PIC" name="PIC" disabled/>
+        </clr-input-container>
+        <clr-input-container>
+          <label>PIC (Penerima Barang oleh Tim IT)</label>
+          <input clrInput type="text" [(ngModel)]="back.Receiver" name="PIC2" />
+        </clr-input-container>
+        <clr-textarea-container>
+          <label>Kelengkapan</label>
+          <textarea clrTextarea [(ngModel)]="back.Kelengkapan" name="Kelengkapan" style="width: 100%;"></textarea>
+        </clr-textarea-container>
+        <clr-textarea-container>
+          <label>Notes</label>
+          <textarea clrTextarea [(ngModel)]="back.Notes" name="Notes" style="width: 100%;"></textarea>
+        </clr-textarea-container>
+      </div>
+    </div>
+    <br />
+    <button class="btn btn-primary btn-block" (click)="submit()">
+      <clr-icon shape="check"></clr-icon>&nbsp;Set kembali
+    </button>
+    <button class="btn btn-block" (click)="cancel()">
+      <clr-icon shape="close"></clr-icon>&nbsp;Cancel
+    </button>
+  </form>
+</div>

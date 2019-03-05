@@ -1,0 +1,102 @@
+<div class="out-container">
+  <h3>Inventory Out</h3>
+  <form clrForm class="out-form">
+    <div class="card">
+      <div class="card-header">
+        Order Out Information
+      </div>
+      <div class="alert alert-warning" role="alert" *ngIf="alert">
+        <div class="alert-items">
+          <div class="alert-item static">
+            <div class="alert-icon-wrapper">
+              <clr-icon class="alert-icon" shape="exclamation-triangle"></clr-icon>
+            </div>
+            <span class="alert-text">{{alertMessage}}</span>
+          </div>
+        </div>
+        <button type="button" class="close" aria-label="Close" (click)="alert=false">
+          <clr-icon aria-hidden="true" shape="close"></clr-icon>
+        </button>
+      </div>
+      <div class="card-block">
+        <zxing-scanner [formats]="['QR_CODE', 'EAN_13', 'CODE_128', 'DATA_MATRIX']" #scanner class="test-class" start="true"
+          (scanSuccess)="handleQrCodeResult($event)"></zxing-scanner>
+        <clr-input-container>
+          <label>
+            <clr-icon shape="search" size="18"></clr-icon> &nbsp;Search Asset No.
+          </label>
+          <input clrInput type="text" [(ngModel)]="searchItem" (input)="eventHandlerSearch($event)" name="ItemNo" />
+        </clr-input-container>
+        <div *ngIf="searchListAssets.length>0" class="search-result">
+          <div style="width: 100%;text-align: right;">
+            <button type="button" (click)="closeSearch()" class="btn btn-icon btn-danger" style="margin: 0px !important;">
+              <clr-icon shape="close"></clr-icon>
+            </button>
+          </div>
+          <div *ngFor="let b of searchListAssets" class="search-result-each" (click)="selectSearch(b)">
+            <span style="width: 100px;">{{b.ItemNo}}</span>&nbsp;<span style="width: 200px;">{{b.Brand}}</span>
+            <span style="background: #00576d;color: #fff;border: 1px #fff solid;padding: 5px;border-radius: 3px;">Add</span>
+          </div>
+        </div>
+        <br />
+        <label for="date" style="padding-left: 0 !important;padding-bottom: 0 !important;font-weight: bold;font-size: 13px;">
+          Items Order
+        </label>
+        <ng-select [items]="listAssets" bindLabel="ItemNo" [multiple]="true" bindValue="ItemNo" [clearable]="true"
+          placeholder="Item" [(ngModel)]="toBeOut" [ngModelOptions]="{standalone: true}" style="width: 260px;display: inline-block;">
+          <ng-template ng-option-tmp let-item="item" let-index="index">
+            <b>{{item.ItemNo}}</b> - <b>{{item.Brand}}</b>
+          </ng-template>
+        </ng-select>
+        <br /><br />
+        <label for="date" style="padding-left: 0 !important;padding-bottom: 0 !important;font-weight: bold;font-size: 13px;">
+          Out Date
+        </label>
+        <my-date-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="out.OutDate" placeholder="" [options]="myDatePickerOptions"
+          (dateChanged)="onDateChanged($event)"></my-date-picker>
+        <clr-input-container>
+          <label>Project</label>
+          <input clrInput type="text" [(ngModel)]="out.Project" name="Project" />
+        </clr-input-container>
+        <clr-input-container>
+          <label>PIC (Penanggung Jawab Barang)</label>
+          <input clrInput type="text" [(ngModel)]="out.PIC" name="PIC" />
+        </clr-input-container>
+        <clr-textarea-container>
+          <label>Kelengkapan</label>
+          <textarea clrTextarea [(ngModel)]="out.Kelengkapan" name="Kelengkapan" style="width: 100%;"></textarea>
+        </clr-textarea-container>
+        <br />
+        <div class="clr-row">
+          <div class="clr-col-md-2 clr-col-sm-12 clr-col-xs-12">
+              
+          </div>
+          <div class="clr-col-md-10 clr-col-sm-12 clr-col-xs-12">
+              <button class="btn btn-outline" (click)="out.Kelengkapan =out.Kelengkapan+'Mouse, '">Mouse</button>
+              <button class="btn btn-outline" (click)="out.Kelengkapan =out.Kelengkapan+'Charger, '">Charger</button>
+              <button class="btn btn-outline" (click)="out.Kelengkapan =out.Kelengkapan+'Headset, '">Headset</button>
+          </div>
+        </div>
+        <clr-textarea-container>
+          <label>Notes</label>
+          <textarea clrTextarea [(ngModel)]="out.Notes" name="Notes" style="width: 100%;"></textarea>
+        </clr-textarea-container>
+      </div>
+      <br />
+        <div class="clr-row">
+          <div class="clr-col-md-2 clr-col-sm-12 clr-col-xs-12">
+              
+          </div>
+          <div class="clr-col-md-10 clr-col-sm-12 clr-col-xs-12">
+              <button class="btn btn-outline" (click)="out.Notes =out.Notes+'Oke, '">Oke</button>
+              <button class="btn btn-outline" (click)="out.Notes =out.Notes+'Lengkap, '">Lengkap</button>
+              <button class="btn btn-warning-outline" (click)="out.Notes =out.Notes+'Ada Rusak, '">Ada Rusak</button>
+          </div>
+        </div>
+    </div>
+    <br />
+    <button class="btn btn-primary btn-block" (click)="submit()">
+      <clr-icon shape="check"></clr-icon>&nbsp;Save
+    </button>
+  </form>
+</div>

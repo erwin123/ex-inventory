@@ -1,0 +1,33 @@
+<clr-header class="header-3">
+  <div class="branding">
+      <a routerLink="/main/anchor" class="nav-link">
+          <img src="assets/logo.png" alt="" title="exp-logo">
+      </a>
+  </div>
+  <div class="header-actions" *ngIf="isLogin">
+      <clr-dropdown>
+          <button class="nav-icon" clrDropdownTrigger>
+              <clr-icon shape="user" class="is-solid"></clr-icon>
+              <clr-icon shape="caret down"></clr-icon>
+          </button>
+          <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+              <!-- <a routerLink="/main/chpwd" style="color:#000" class="nav-link" clrDropdownItem>Ganti Kata Sandi</a> -->
+              <a (click)="logout()" clrDropdownItem>Keluar</a>
+          </clr-dropdown-menu>
+      </clr-dropdown>
+  </div>
+</clr-header>
+<nav class="header-nav menus" [clr-nav-level]="1">
+  <a *ngIf="!isLogin" routerLink="/main/login" class="nav-link">
+      <clr-icon shape="login" size="18"></clr-icon> Masuk
+  </a>
+  <a *ngIf="isLogin" routerLink="/main/landing" class="nav-link">
+      <clr-icon shape="home" class="is-solid" size="18"></clr-icon> Beranda
+  </a>
+  <a *ngIf="isLogin" routerLink="/main/history" class="nav-link">
+      <clr-icon shape="line-chart" class="is-solid"></clr-icon> Report
+  </a>
+  <a *ngIf="isLogin" (click)="logout()" class="nav-link">
+      <clr-icon shape="list" class="is-solid"></clr-icon> Keluar
+  </a>
+</nav>

@@ -1,0 +1,58 @@
+[
+    {
+        "Name": "Asus",
+        "Description":""
+    },
+    {
+        "Name": "LG",
+        "Description": ""
+    },
+    {
+        "Name": "Lenovo",
+        "Description": ""
+    },
+    {
+        "Name": "Samsung",
+        "Description": ""
+    },
+    {
+        "Name": "Sony",
+        "Description": ""
+    },
+    {
+        "Name": "Xiaomi",
+        "Description": ""
+    },
+    {
+        "Name": "Fujitsu",
+        "Description": ""
+    },
+    {
+        "Name": "Panasonic",
+        "Description": ""
+    },
+    {
+        "Name": "Sharp",
+        "Description": ""
+    },
+    {
+        "Name": "Electrolux",
+        "Description": ""
+    },
+    {
+        "Name": "Sanken",
+        "Description": ""
+    },
+    {
+        "Name": "Daikin",
+        "Description": ""
+    },
+    {
+        "Name": "Toshiba",
+        "Description": ""
+    },
+    {
+        "Name": "Benq",
+        "Description": ""
+    }
+]

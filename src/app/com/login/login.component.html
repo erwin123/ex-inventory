@@ -1,0 +1,16 @@
+<div class="login-container">
+  <form class="login" (ngSubmit)="login()">
+    <h1 class="welcome">Hi, Ferguso!</h1>
+    Inventory Management
+    <div class="login-group">
+      <input [attr.disabled]="lock ? 'disabled' : null" class="username" type="text" id="login_username" placeholder="Username"
+        name="username" [(ngModel)]="user.Username">
+      <input [attr.disabled]="lock ? 'disabled' : null" class="password" type="password" id="login_password"
+        placeholder="Password" name="password" [(ngModel)]="user.Password">
+      <div *ngIf="message.length > 0" style="color:red">
+        {{message}}
+      </div>
+      <button [attr.disabled]="lock ? 'disabled' : null" type="submit" class="btn btn-primary btn-block">Masuk</button>
+    </div>
+  </form>
+</div>

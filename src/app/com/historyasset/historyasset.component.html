@@ -1,0 +1,80 @@
+<div class="history-list-container">
+  <form (ngSubmit)="search()">
+    <clr-input-container>
+      <label>
+        <clr-icon shape="search" size="18"></clr-icon> &nbsp;Search Asset No.
+      </label>
+      <input clrInput placeholder="" name="input" [(ngModel)]="assetNo" />
+    </clr-input-container>
+  </form>
+  <clr-datagrid>
+    <clr-dg-column style="background: #0b0220;" [clrDgField]="'OutNo'">No Keluar.</clr-dg-column>
+    <clr-dg-column style="background: #0b0220;" [clrDgField]="'OutDate'">Tgl Keluar</clr-dg-column>
+    <clr-dg-column style="background: #0b0220;" [clrDgField]="'Project'">Project</clr-dg-column>
+    <clr-dg-column style="background: #0b0220;" [clrDgField]="'PICOut'">Penanggung Jwb</clr-dg-column>
+    <clr-dg-column style="background: #0b0220;" [clrDgField]="'KelengkapanOut'">Kelengkapan</clr-dg-column>
+    <clr-dg-column style="background: #0b0220;" [clrDgField]="'NotesOut'">Notes</clr-dg-column>
+
+    <clr-dg-column style="background: #022211;" [clrDgField]="'OutBackNo'">No Kembali.</clr-dg-column>
+    <clr-dg-column style="background: #022211;" [clrDgField]="'BackDate'">Tgl Kembali</clr-dg-column>
+    <clr-dg-column style="background: #022211;" [clrDgField]="'PICBack'">Pembawa</clr-dg-column>
+    <clr-dg-column style="background: #022211;" [clrDgField]="'Receiver'">Penerima IT</clr-dg-column>
+    <clr-dg-column style="background: #022211;" [clrDgField]="'KelengkapanBack'">Kelengkapan</clr-dg-column>
+    <clr-dg-column style="background: #022211;" [clrDgField]="'NotesBack'">Notes</clr-dg-column>
+
+    <clr-dg-row *clrDgItems="let b of histories">
+      <clr-dg-cell style="background: #14043b;"><a (click)="goDetail(b.OutNo)" style="cursor: pointer;color:#00f7ff;">{{b.OutNo}}</a></clr-dg-cell>
+      <clr-dg-cell style="background: #14043b;">{{b.OutDate}}</clr-dg-cell>
+      <clr-dg-cell style="background: #14043b;">{{b.Project ===''? '-':b.Project}}</clr-dg-cell>
+      <clr-dg-cell style="background: #14043b;">{{b.PICOut ===''? '-':b.PICOut}}</clr-dg-cell>
+      <clr-dg-cell style="background: #14043b;">{{b.KelengkapanOut ===''? '-':b.KelengkapanOut}}</clr-dg-cell>
+      <clr-dg-cell style="background: #14043b;">{{b.NotesOut ===''? '-':b.NotesOut}}</clr-dg-cell>
+
+      <clr-dg-cell style="background: #043b1d;">{{b.OutBackNo ===''? '-':b.OutBackNo}}</clr-dg-cell>
+      <clr-dg-cell style="background: #043b1d;">{{b.BackDate ===''? '-':b.BackDate}}</clr-dg-cell>
+      <clr-dg-cell style="background: #043b1d;">{{b.PICBack ===''? '-':b.PICBack}}</clr-dg-cell>
+      <clr-dg-cell style="background: #043b1d;">{{b.Receiver ===''? '-':b.Receiver}}</clr-dg-cell>
+      <clr-dg-cell style="background: #043b1d;">{{b.KelengkapanBack ===''? '-':b.KelengkapanBack}}</clr-dg-cell>
+      <clr-dg-cell style="background: #043b1d;">{{b.NotesBack ===''? '-':b.NotesBack}}</clr-dg-cell>
+    </clr-dg-row>
+
+    <!-- <clr-dg-footer>{{listAssets.length}} Item</clr-dg-footer> -->
+    <clr-dg-footer>
+      <clr-dg-pagination #pagination [clrDgPageSize]="10">
+        <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Item per page</clr-dg-page-size>
+        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+        of {{pagination.totalItems}} Item
+      </clr-dg-pagination>
+    </clr-dg-footer>
+  </clr-datagrid>
+  <clr-modal [(clrModalOpen)]="detailOut">
+    <h3 class="modal-title">Data Barang Keluar</h3>
+    <div class="modal-body">
+      <div class="clr-row">
+        <div class="clr-col-6">No Keluar</div>
+        <div class="clr-col-6">{{this.outNo}}</div>
+        <div class="clr-col-6">Tanggal Keluar</div>
+        <div class="clr-col-6">{{this.outDate}}</div>
+        <div class="clr-col-6">Project</div>
+        <div class="clr-col-6">{{this.outProject}}</div>
+        <div class="clr-col-6">Penanggung Jawab</div>
+        <div class="clr-col-6">{{this.outPIC}}</div>
+        <div class="clr-col-6">Kelengkapan</div>
+        <div class="clr-col-6">{{this.outKelengkapan}}</div>
+        <div class="clr-col-6">Notes</div>
+        <div class="clr-col-6">{{this.outNotes}}</div>
+      </div>
+      <br/>
+      <table>
+        <tr>
+          <th>No Keluar Item</th><th>&nbsp;&nbsp;</th>
+          <th>Asset No.</th>
+        </tr>
+        <tr *ngFor="let c of historyOut">
+          <td>{{c.OutDetailNo}}</td><td>&nbsp;&nbsp;</td>
+          <td><a (click)="goAssetDetail(c.AssetNoDetail)" style="cursor: pointer;color:#00f7ff;">{{c.AssetNoDetail}}</a></td>
+        </tr>
+      </table>
+    </div>
+  </clr-modal>
+</div>

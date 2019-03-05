@@ -1,0 +1,40 @@
+[
+    {
+        "Name": "IT",
+        "Divs": "experd"
+    },
+    {
+        "Name": "IAS",
+        "Divs": "experd"
+    },
+    {
+        "Name": "FIN",
+        "Divs": "experd"
+    },
+    {
+        "Name": "MKT",
+        "Divs": "experd"
+    },
+    {
+        "Name": "HRGA",
+        "Divs": "experd"
+    },
+    {
+        "Name": "SLS",
+        "Divs": "experd"
+    },
+    {
+        "Name": "GA",
+        "Divs": "experd"
+    }
+    ,
+    {
+        "Name": "AST",
+        "Divs": "experd"
+    }
+    ,
+    {
+        "Name": "HR",
+        "Divs": "experd"
+    }
+]

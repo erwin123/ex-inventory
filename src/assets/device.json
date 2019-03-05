@@ -1,0 +1,14 @@
+[
+    {
+        "Name": "PC",
+        "Value": "PC"
+    },
+    {
+        "Name": "Notebook",
+        "Value": "NB"
+    },
+    {
+        "Name": "Monitor",
+        "Value": "MNTR"
+    }
+]

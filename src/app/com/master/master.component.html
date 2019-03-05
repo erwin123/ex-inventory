@@ -1,0 +1,132 @@
+<div class="master-container">
+  <h3>Inventory Maintenance</h3>
+  <form clrForm class="master-form">
+    <div class="card">
+      <div class="card-header">
+        Identity Info
+      </div>
+      <div class="card-block">
+        <clr-input-container>
+          <label>
+            <clr-icon shape="search" size="18"></clr-icon> &nbsp;Search Asset No.
+          </label>
+          <input clrInput type="text" [(ngModel)]="searchItem" (keydown)="eventHandlerSearch($event)" name="ItemNo" />
+        </clr-input-container>
+        <div *ngIf="searchListAssets.length>0" class="search-result">
+          <div style="width: 100%;text-align: right;">
+            <button type="button" (click)="closeSearch()" class="btn btn-icon btn-danger" style="margin: 0px !important;">
+              <clr-icon shape="close"></clr-icon>
+            </button>
+          </div>
+          <div *ngFor="let b of searchListAssets" class="search-result-each" (click)="selectSearch(b)">
+            <span style="width: 100px;">{{b.ItemNo}}</span>&nbsp;<span style="width: 200px;">{{b.Brand}}</span>
+          </div>
+        </div>
+        <clr-input-container>
+          <label>Asset No.</label>
+          <input clrInput type="text" [(ngModel)]="asset.ItemNo" name="ItemNo2" required/>
+          <clr-control-helper>Make sure not duplicate!</clr-control-helper>
+          <clr-control-error>This field is required!</clr-control-error>
+        </clr-input-container>
+        <clr-input-container>
+          <label>Name</label>
+          <input clrInput type="text" [(ngModel)]="asset.Name" name="Name" />
+        </clr-input-container>
+        <clr-select-container>
+          <label>Dedicated for Division</label>
+          <select clrSelect name="division" [(ngModel)]="asset.DivisionDedicate" style="width: 260px;">
+            <option *ngFor="let b of divs" [value]="b">{{b}}</option>
+          </select>
+        </clr-select-container>
+        <clr-select-container>
+          <label>Status</label>
+          <select clrSelect name="status" [(ngModel)]="asset.Status" style="width: 260px;">
+            <option value="0">Free</option>
+            <option value="2">Out</option>
+            <option value="1">Broken</option>
+          </select>
+        </clr-select-container>
+        <br />
+        <label for="date" style="padding-left: 0 !important;padding-bottom: 0 !important;font-weight: bold;font-size: 13px;">Receive
+          Date</label>
+        <my-date-picker [ngModelOptions]="{standalone: true}" [(ngModel)]="asset.BoughtDate" placeholder="" [options]="myDatePickerOptions"
+          (dateChanged)="onDateChanged($event)"></my-date-picker>
+
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        Specification
+      </div>
+      <div class="card-block">
+        <clr-select-container>
+          <label>Brand</label>
+          <select clrSelect name="brand" [(ngModel)]="asset.Brand" style="width: 260px;">
+            <option *ngFor="let b of brands" [value]="b">{{b}}</option>
+          </select>
+        </clr-select-container>
+        <clr-select-container>
+          <label>Type</label>
+          <select clrSelect name="type" [(ngModel)]="asset.Type" style="width: 260px;">
+            <option *ngFor="let b of devices" [value]="b.Value">{{b.Name}}</option>
+          </select>
+          <!-- <select clrSelect name="type" [(ngModel)]="asset.Type" style="width: 260px;">
+            <option value="NB">Notebook</option>
+            <option value="PC">PC</option>
+          </select> -->
+        </clr-select-container>
+        <clr-input-container>
+          <label>Processor</label>
+          <input clrInput type="text" [(ngModel)]="asset.Processor" name="Processor" />
+        </clr-input-container>
+        <clr-input-container>
+          <label>RAM</label>
+          <input clrInput type="text" [(ngModel)]="asset.RAM" name="ram" />
+        </clr-input-container>
+        <clr-input-container>
+          <label>HDD</label>
+          <input clrInput type="text" [(ngModel)]="asset.HDD" name="hdd" />
+        </clr-input-container>
+        <clr-input-container>
+          <label>VGA</label>
+          <input clrInput type="text" [(ngModel)]="asset.VGA" name="vga" />
+        </clr-input-container>
+
+        <div *ngIf="asset.Type=='PC'">
+          <clr-input-container>
+            <label>Mother Board</label>
+            <input clrInput type="text" [(ngModel)]="asset.MotherBoard" name="mobo" />
+          </clr-input-container>
+          <clr-input-container>
+            <label>Monitor No</label>
+            <input clrInput type="text" [(ngModel)]="asset.MonitorNo" name="MonitorNo" />
+          </clr-input-container>
+        </div>
+        <clr-textarea-container>
+          <label>Notes</label>
+          <textarea clrTextarea [(ngModel)]="asset.Notes" name="Notes" style="width: 100%;"></textarea>
+        </clr-textarea-container>
+      </div>
+    </div>
+    <br />
+    <div class="alert alert-warning" role="alert" *ngIf="alert">
+      <div class="alert-items">
+        <div class="alert-item static">
+          <div class="alert-icon-wrapper">
+            <clr-icon class="alert-icon" shape="exclamation-triangle"></clr-icon>
+          </div>
+          <span class="alert-text">{{alertMessage}}</span>
+        </div>
+      </div>
+      <button type="button" class="close" aria-label="Close" (click)="alert=false">
+        <clr-icon aria-hidden="true" shape="close"></clr-icon>
+      </button>
+    </div>
+    <button class="btn btn-primary btn-block" (click)="submit()">
+      <clr-icon shape="plus"></clr-icon>&nbsp;Save
+    </button>
+    <button *ngIf="asset.Id !==0" class="btn btn-danger btn-block" (click)="delete()">
+      <clr-icon shape="trash"></clr-icon>&nbsp;Delete
+    </button>
+  </form>
+</div>

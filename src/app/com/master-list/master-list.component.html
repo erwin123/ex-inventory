@@ -1,0 +1,59 @@
+<div class="master-list-container">
+
+    <div class="alert alert-info" role="alert">
+        <div class="alert-items">
+            <div class="alert-item static">
+                <div class="alert-icon-wrapper">
+                    <clr-icon class="alert-icon" shape="info-circle"></clr-icon>
+                </div>
+                <span class="alert-text"> Item Status 0 (Free) | 1 (Broken) | 2 (Out)</span>
+            </div>
+        </div>
+    </div>
+    <clr-datagrid>
+        <clr-dg-column [clrDgField]="'ItemNo'">Asset No.</clr-dg-column>
+        <clr-dg-column [clrDgField]="'Brand'">Brand</clr-dg-column>
+        <clr-dg-column [clrDgField]="'Type'">Type</clr-dg-column>
+        <clr-dg-column [clrDgField]="'RAM'">RAM</clr-dg-column>
+        <clr-dg-column [clrDgField]="'HDD'">HDD</clr-dg-column>
+        <clr-dg-column [clrDgField]="'Status'">Status</clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let b of listAssets">
+            <clr-dg-cell><a href="/#/main/master/maintenance?itemno={{b.ItemNo}}" (click)="goDetail(b.ItemNo)" style="cursor: pointer;color:#00f7ff;">{{b.ItemNo}}</a></clr-dg-cell>
+            <clr-dg-cell>{{b.Brand}}</clr-dg-cell>
+            <clr-dg-cell>{{b.Type}}</clr-dg-cell>
+            <clr-dg-cell>{{b.RAM}}</clr-dg-cell>
+            <clr-dg-cell>{{b.HDD}}</clr-dg-cell>
+            <clr-dg-cell>{{b.Status ===0 ? 'Free' : b.Status ===1 ? 'Broken':'Out'}}&nbsp;<a (click)="goHistory(b.ItemNo)"
+                    style="cursor: pointer;color:#00f7ff;">See History</a></clr-dg-cell>
+        </clr-dg-row>
+
+        <!-- <clr-dg-footer>{{listAssets.length}} Item</clr-dg-footer> -->
+        <clr-dg-footer>
+            <clr-dg-pagination #pagination [clrDgPageSize]="10">
+                <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Item per page</clr-dg-page-size>
+                {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+                of {{pagination.totalItems}} Item
+            </clr-dg-pagination>
+        </clr-dg-footer>
+    </clr-datagrid>
+    <br />
+    <label for="date" style="padding-left: 0 !important;padding-bottom: 0 !important;font-weight: bold;font-size: 13px;">
+        Items QR Print
+    </label>
+    <ng-select [items]="listAssets" bindLabel="ItemNo" [multiple]="true" bindValue="Id" [clearable]="true" placeholder="Item"
+        [(ngModel)]="toBePrint" [ngModelOptions]="{standalone: true}" style="width: 260px;display: inline-block;">
+        <ng-template ng-option-tmp let-item="item" let-index="index">
+            <b>{{item.ItemNo}}</b> - <b>{{item.Brand}}</b>
+        </ng-template>
+    </ng-select>
+    &nbsp;<button class="btn btn-outline" (click)="printOut()">Print Out</button>
+    &nbsp;<button class="btn btn-outline" (click)="printOutAll()">Print All</button>
+    <br /><br />
+    <label for="date" style="padding-left: 0 !important;padding-bottom: 0 !important;font-weight: bold;font-size: 13px;">
+        Manual QR Print Delimited by "|" Maximum 2048 Data &nbsp;&nbsp;
+    </label>
+    <input style="width: 260px;display: inline-block;" type="text" [(ngModel)]="manualPrintItem" name="ManualItem"
+        placeholder="ex : ITHW10001|HRW10131331" />
+        &nbsp;<button class="btn btn-outline" (click)="printManual()">Print Out</button>
+</div>
